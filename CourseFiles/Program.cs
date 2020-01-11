@@ -8,25 +8,37 @@ namespace CourseFiles
         static void Main(string[] args)
         {
             string sourcePath = @"c:\users\Adm\source\Files\Teste.txt";
-            //FileStream fs = null;
-
-            //Dessa forma não é necessário criar manualmente o FileStream
-            StreamReader sr = File.OpenText(sourcePath);
+            /*
+             *try
+             {
+                 using (FileStream fs = new FileStream(sourcePath, FileMode.Open))
+                 {
+                     using (StreamReader sr = new StreamReader(fs))
+                     {
+                         while (!sr.EndOfStream)
+                         {
+                             Console.WriteLine(sr.ReadLine());
+                         }
+                     }
+                 }
+             }
+             catch(IOException e)
+             {
+                 Console.WriteLine("An error occured: " + e.Message);
+             }*/
             try
             {
-                while (!sr.EndOfStream)
+                using (StreamReader sr = File.OpenText(sourcePath))
                 {
-                    string line = sr.ReadLine();
-                    Console.WriteLine(line);
-                }                
+                    while (!sr.EndOfStream)
+                    {
+                        Console.WriteLine(sr.ReadLine());
+                    }
+                }
             }
             catch (IOException e)
             {
-                System.Console.WriteLine("Error! " + e.Message);
-            }
-            finally
-            {                
-                if (sr != null) sr.Close();
+                Console.WriteLine("An error occured: " + e.Message);
             }
         }
     }
