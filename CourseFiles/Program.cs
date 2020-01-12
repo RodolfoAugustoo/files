@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace CourseFiles
 {
@@ -7,21 +8,26 @@ namespace CourseFiles
     {
         static void Main(string[] args)
         {
-            string sourcePath = @"c:\users\Adm\source\Files\Teste.txt";
-            string targetPath = @"c:\users\Adm\source\Files\Teste1.txt";
+            string sourcePath = @"c:\users\Adm\source\Files";
+            //string targetPath = @"c:\users\Adm\source\Files\Teste1.txt";
 
             try
             {
-                string[] lines = File.ReadAllLines(sourcePath);
-
-                using (StreamWriter sw = File.AppendText(targetPath))
+                IEnumerable<string> folders =  Directory.EnumerateDirectories(sourcePath, "*.*", SearchOption.AllDirectories);
+                Console.WriteLine("FOLDERS:");
+                foreach(string f in folders)
                 {
-                    foreach(string s in lines)
-                    {
-                        sw.WriteLine(s.ToUpper());
-                    }                    
+                    Console.WriteLine(f);
                 }
-                Console.WriteLine(lines);
+
+                Directory.CreateDirectory(sourcePath + "\\teste");               
+
+                IEnumerable<string> files = Directory.EnumerateFiles(sourcePath, "*.*", SearchOption.AllDirectories);
+                Console.WriteLine("\r\nFILES:");
+                foreach (string f in files)
+                {
+                    Console.WriteLine(f);
+                }
             }
             catch (IOException e)
             {
