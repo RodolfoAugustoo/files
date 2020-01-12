@@ -8,33 +8,20 @@ namespace CourseFiles
         static void Main(string[] args)
         {
             string sourcePath = @"c:\users\Adm\source\Files\Teste.txt";
-            /*
-             *try
-             {
-                 using (FileStream fs = new FileStream(sourcePath, FileMode.Open))
-                 {
-                     using (StreamReader sr = new StreamReader(fs))
-                     {
-                         while (!sr.EndOfStream)
-                         {
-                             Console.WriteLine(sr.ReadLine());
-                         }
-                     }
-                 }
-             }
-             catch(IOException e)
-             {
-                 Console.WriteLine("An error occured: " + e.Message);
-             }*/
+            string targetPath = @"c:\users\Adm\source\Files\Teste1.txt";
+
             try
             {
-                using (StreamReader sr = File.OpenText(sourcePath))
+                string[] lines = File.ReadAllLines(sourcePath);
+
+                using (StreamWriter sw = File.AppendText(targetPath))
                 {
-                    while (!sr.EndOfStream)
+                    foreach(string s in lines)
                     {
-                        Console.WriteLine(sr.ReadLine());
-                    }
+                        sw.WriteLine(s.ToUpper());
+                    }                    
                 }
+                Console.WriteLine(lines);
             }
             catch (IOException e)
             {
